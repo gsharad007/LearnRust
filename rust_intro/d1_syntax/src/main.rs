@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Point {
     x: i32,
     y: i32,
@@ -8,6 +8,12 @@ pub struct Point {
 pub struct Ship {
     location: Point,
     status: ShipStatus,
+}
+
+#[derive(Debug, PartialEq)]
+pub enum Action {
+    Shot { from: Point, at: Point },
+    Move { from: Point, to: Point },
 }
 
 impl Point {
@@ -23,6 +29,33 @@ impl Point {
 impl Ship {
     pub fn attack(&mut self, p: Point) {
         self.status = ShipStatus::Firing(p);
+    }
+    pub fn time_step(&mut self, v: &mut Vec<Action>) {
+        use std::cmp::Ordering::*;
+        match &self.status {
+            ShipStatus::Heading(p) => {
+                let nx = match p.x.cmp(&self.location.x) {
+                    Greater => p.x + 1,
+                    Less => p.x - 1,
+                    Equal => p.x,
+                };
+                let ny = match p.y.cmp(&self.location.y) {
+                    Greater => p.y + 1,
+                    Less => p.y - 1,
+                    Equal => p.y,
+                };
+                v.push(Action::Move {
+                    from: self.location.clone(),
+                    to: Point::new(nx, ny),
+                });
+                self.location = Point::new(nx, ny);
+            }
+            ShipStatus::Firing(p) => v.push(Action::Shot {
+                from: self.location.clone(),
+                at: p.clone(),
+            }),
+            _ => {}
+        }
     }
 }
 
@@ -50,4 +83,12 @@ fn main() {
 
     ship.attack(b);
     println!("Ship Attacking = {:?}", ship);
+
+    let mut actions: Vec<Action> = Vec::new();
+    ship.time_step(&mut actions);
+    println!("Actions = {:?}", actions);
+
+    if let ShipStatus::Firing(x) = ship.status {
+        println!("This ship is firing at {:?}", x);
+    }
 }
