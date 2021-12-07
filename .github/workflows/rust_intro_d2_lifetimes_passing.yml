@@ -1,4 +1,4 @@
-name: rust_intro/d1_syntax
+name: rust_intro/d2_lifetimes_passing
 
 on:
     push:
@@ -11,7 +11,7 @@ env:
 
 defaults:
     run:
-    working-directory: ./rust_intro/d1_syntax
+    working-directory: ./rust_intro/d2_lifetimes_passing
 
 jobs:
     build:
