@@ -25,28 +25,28 @@ $s | % {
 name: $_
 
 on:
-    push:
+  push:
     branches: [ main ]
-    pull_request:
+  pull_request:
     branches: [ main ]
 
 env:
-    CARGO_TERM_COLOR: always
+  CARGO_TERM_COLOR: always
 
 defaults:
-    run:
+  run:
     working-directory: ./$_
 
 jobs:
-    build:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - name: Build
-        run: cargo build --verbose
+      run: cargo build --verbose
     - name: Build Release
-        run: cargo build --release --verbose
+      run: cargo build --release --verbose
     - name: Run tests
-        run: cargo test --verbose    
+      run: cargo test --verbose  
 "@.trim() | Set-Content ".\.github\workflows\$filename.yml"
 }
