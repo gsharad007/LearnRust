@@ -38,15 +38,25 @@ defaults:
     working-directory: ./$_
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-window:
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Run tests
+      run: cargo test --verbose  
     - name: Build
       run: cargo build --verbose
     - name: Build Release
       run: cargo build --release --verbose
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
     - name: Run tests
       run: cargo test --verbose  
+    - name: Build
+      run: cargo build --verbose
+    - name: Build Release
+      run: cargo build --release --verbose
 "@.trim() | Set-Content ".\.github\workflows\$filename.yml"
 }
