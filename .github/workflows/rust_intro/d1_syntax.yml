@@ -1,4 +1,4 @@
-name: LearnRust
+name: rust_intro/d1_syntax
 
 on:
   push:
@@ -9,16 +9,16 @@ on:
 env:
   CARGO_TERM_COLOR: always
 
+defaults:
+  run:
+    working-directory: ./rust_intro/d1_syntax
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      working-directory: ./rust_intro
-      run: cargo build --workspace --verbose
+      run: cargo build --verbose
     - name: Run tests
-      working-directory: ./rust_intro
-      run: cargo test --workspace --verbose
+      run: cargo test --verbose
