@@ -2,8 +2,8 @@ use std::ops::{Add, AddAssign};
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct Point<N> {
-    x: N,
-    y: N,
+    pub x: N,
+    pub y: N,
 }
 
 impl<N> Point<N> {
