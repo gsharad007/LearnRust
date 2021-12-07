@@ -1,0 +1,24 @@
+name: LearnRust
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: [ubuntu-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build
+      working-directory: ./rust_intro
+      run: cargo build --workspace --verbose
+    - name: Run tests
+      working-directory: ./rust_intro
+      run: cargo test --workspace --verbose
