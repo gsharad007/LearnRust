@@ -10,12 +10,13 @@ fn main() {
 
     let s = "hello".to_string();
     drop(s);
-    println!("s = {}", s);
+    // println!("s = {}", s);
 }
 
-pub fn get_y<'a>() -> &'a i32 {
+// pub fn get_y<'a>() -> &'a i32 {
+pub fn get_y() -> i32 {
     let mut y = 13;
     let n = &mut y;
     *n += 3;
-    &y
+    y
 }
