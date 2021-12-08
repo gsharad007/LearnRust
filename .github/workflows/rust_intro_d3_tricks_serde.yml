@@ -1,0 +1,36 @@
+name: rust_intro/d3_tricks_serde
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+defaults:
+  run:
+    working-directory: ./rust_intro/d3_tricks_serde
+
+jobs:
+  build-window:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+      run: cargo test --verbose  
+    - name: Build
+      run: cargo build --verbose
+    - name: Build Release
+      run: cargo build --release --verbose
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run tests
+      run: cargo test --verbose  
+    - name: Build
+      run: cargo build --verbose
+    - name: Build Release
+      run: cargo build --release --verbose
